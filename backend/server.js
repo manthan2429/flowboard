@@ -6,6 +6,7 @@ import { Server } from "socket.io";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import boardRoutes from "./routes/boardRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 import { registerSocketHandlers } from "./socket/socketHandler.js";
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/boards", boardRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 

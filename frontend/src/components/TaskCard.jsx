@@ -27,6 +27,18 @@ export default function TaskCard({ task, onDragStart, onDelete, onOpen }) {
         </button>
       </div>
       {task.description && <p className="text-paper/50 text-xs mt-1 line-clamp-2">{task.description}</p>}
+      {task.assignee && (
+        <div className="flex items-center gap-1.5 mt-2">
+          <span
+            className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-medium text-ink shrink-0"
+            style={{ backgroundColor: task.assignee.avatarColor || "#E8B34E" }}
+            title={task.assignee.name}
+          >
+            {task.assignee.name?.[0]?.toUpperCase()}
+          </span>
+          <span className="text-paper/40 text-xs">{task.assignee.name}</span>
+        </div>
+      )}
     </motion.div>
   );
 }

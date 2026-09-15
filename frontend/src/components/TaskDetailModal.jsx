@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function TaskDetailModal({ task, onClose, onSave, onDelete }) {
+export default function TaskDetailModal({ task, members = [], onClose, onSave, onDelete }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [assigneeId, setAssigneeId] = useState("");
 
   useEffect(() => {
     if (task) {
       setTitle(task.title);
       setDescription(task.description || "");
+      setAssigneeId(task.assignee?._id || "");
     }
   }, [task]);
 
@@ -16,7 +18,7 @@ export default function TaskDetailModal({ task, onClose, onSave, onDelete }) {
 
   const save = () => {
     if (!title.trim()) return;
-    onSave(task._id, { title: title.trim(), description });
+    onSave(task._id, { title: title.trim(), description, assigneeId: assigneeId || null });
     onClose();
   };
 
@@ -53,6 +55,20 @@ export default function TaskDetailModal({ task, onClose, onSave, onDelete }) {
             placeholder="Add more detail for teammates..."
             className="mt-1 w-full bg-forest border border-paper/15 rounded-md px-3 py-2 outline-none focus:border-gold text-sm resize-none"
           />
+
+          <label className="block text-xs text-paper/50 mt-4">Assign to</label>
+          <select
+            value={assigneeId}
+            onChange={(e) => setAssigneeId(e.target.value)}
+            className="mt-1 w-full bg-forest border border-paper/15 rounded-md px-3 py-2 outline-none focus:border-gold text-sm"
+          >
+            <option value="">Unassigned</option>
+            {members.map((m) => (
+              <option key={m._id} value={m._id}>
+                {m.name}
+              </option>
+            ))}
+          </select>
 
           <div className="mt-5 flex items-center justify-between">
             <button

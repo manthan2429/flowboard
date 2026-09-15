@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import NotificationBell from "./NotificationBell.jsx";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -10,6 +11,7 @@ export default function Navbar() {
           FlowBoard
         </Link>
         <div className="flex items-center gap-4 text-sm">
+          <NotificationBell />
           <span className="text-paper/60">{user?.name}</span>
           <button onClick={logout} className="text-paper/60 hover:text-paper transition-colors">
             Log out

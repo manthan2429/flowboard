@@ -154,6 +154,7 @@ export default function BoardView() {
 
       <TaskDetailModal
         task={activeTask}
+        members={board.members || []}
         onClose={() => setActiveTask(null)}
         onSave={onSaveTask}
         onDelete={onDelete}

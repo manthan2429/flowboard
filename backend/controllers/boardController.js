@@ -1,7 +1,15 @@
 import Board from "../models/Board.js";
 import User from "../models/User.js";
+import Notification from "../models/Notification.js";
+import { notifyUser } from "../socket/socketHandler.js";
+import { sendTaskAssignedEmail } from "../utils/mailer.js";
 
 const MEMBER_FIELDS = "name email avatarColor";
+const TASK_POPULATE = [
+  { path: "members", select: MEMBER_FIELDS },
+  { path: "owner", select: MEMBER_FIELDS },
+  { path: "tasks.assignee", select: MEMBER_FIELDS },
+];
 
 export const createBoard = async (req, res) => {
   try {
@@ -25,9 +33,7 @@ export const getBoards = async (req, res) => {
 
 export const getBoard = async (req, res) => {
   try {
-    const board = await Board.findOne({ _id: req.params.id, members: req.user._id })
-      .populate("members", MEMBER_FIELDS)
-      .populate("owner", MEMBER_FIELDS);
+    const board = await Board.findOne({ _id: req.params.id, members: req.user._id }).populate(TASK_POPULATE);
     if (!board) return res.status(404).json({ message: "Board not found" });
     res.json(board);
   } catch (err) {
@@ -53,10 +59,7 @@ export const inviteMember = async (req, res) => {
 
     board.members.push(invitee._id);
     await board.save();
-    const populated = await board.populate([
-      { path: "members", select: MEMBER_FIELDS },
-      { path: "owner", select: MEMBER_FIELDS },
-    ]);
+    const populated = await board.populate(TASK_POPULATE);
 
     const io = req.app.get("io");
     io.to(board._id.toString()).emit("board:updated", populated);
@@ -79,10 +82,7 @@ export const removeMember = async (req, res) => {
 
     board.members = board.members.filter((m) => m.toString() !== userId);
     await board.save();
-    const populated = await board.populate([
-      { path: "members", select: MEMBER_FIELDS },
-      { path: "owner", select: MEMBER_FIELDS },
-    ]);
+    const populated = await board.populate(TASK_POPULATE);
 
     const io = req.app.get("io");
     io.to(board._id.toString()).emit("board:updated", populated);
@@ -93,11 +93,7 @@ export const removeMember = async (req, res) => {
   }
 };
 
-const populateBoard = (board) =>
-  board.populate([
-    { path: "members", select: MEMBER_FIELDS },
-    { path: "owner", select: MEMBER_FIELDS },
-  ]);
+const populateBoard = (board) => board.populate(TASK_POPULATE);
 
 export const addTask = async (req, res) => {
   try {
@@ -122,7 +118,7 @@ export const addTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { taskId } = req.params;
-    const { status, order, title, description } = req.body;
+    const { status, order, title, description, assigneeId } = req.body;
     const board = await Board.findOne({ _id: req.params.id, members: req.user._id });
     if (!board) return res.status(404).json({ message: "Board not found" });
 
@@ -136,11 +132,49 @@ export const updateTask = async (req, res) => {
       task.title = title.trim();
     }
     if (description !== undefined) task.description = description;
+
+    let newlyAssignedTo = null;
+    if (assigneeId !== undefined) {
+      if (!assigneeId) {
+        task.assignee = null;
+      } else {
+        if (!board.members.some((m) => m.toString() === assigneeId)) {
+          return res.status(400).json({ message: "Assignee must be a board member" });
+        }
+        const previousAssignee = task.assignee?.toString();
+        task.assignee = assigneeId;
+        if (assigneeId !== previousAssignee && assigneeId !== req.user._id.toString()) {
+          newlyAssignedTo = assigneeId;
+        }
+      }
+    }
+
     await board.save();
     const populated = await populateBoard(board);
 
     const io = req.app.get("io");
     io.to(board._id.toString()).emit("board:updated", populated);
+
+    if (newlyAssignedTo) {
+      const assignee = await User.findById(newlyAssignedTo);
+      if (assignee) {
+        const notification = await Notification.create({
+          recipient: assignee._id,
+          type: "task_assigned",
+          message: `${req.user.name} assigned you "${task.title}" on ${board.name}`,
+          board: board._id,
+          taskId: task._id,
+        });
+        notifyUser(io, assignee._id.toString(), notification);
+        sendTaskAssignedEmail({
+          to: assignee.email,
+          assigneeName: assignee.name,
+          taskTitle: task.title,
+          boardName: board.name,
+          boardId: board._id.toString(),
+        });
+      }
+    }
 
     res.json(populated);
   } catch (err) {

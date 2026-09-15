@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../lib/api.js";
+import { disconnectSocket } from "../lib/socket.js";
 
 const AuthContext = createContext(null);
 
@@ -35,6 +36,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem("flowboard_token");
     setUser(null);
+    disconnectSocket();
   };
 
   return (
