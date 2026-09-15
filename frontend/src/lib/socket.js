@@ -7,7 +7,7 @@ export const getSocket = () => {
     socket = io("/", {
       autoConnect: true,
       path: "/socket.io",
-      auth: (cb) => cb({ token: localStorage.getItem("flowboard_token") }),
+      auth: (cb) => cb({ token: sessionStorage.getItem("flowboard_token") }),
     });
   } else if (!socket.connected) {
     socket.connect();
