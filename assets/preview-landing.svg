@@ -1,0 +1,72 @@
+<svg viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .display { font-family: 'Space Grotesk', 'Segoe UI', sans-serif; }
+      .body { font-family: 'Inter', 'Segoe UI', sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="675" fill="#132A28"/>
+
+  <!-- header -->
+  <text x="48" y="56" class="display" font-size="22" font-weight="700" fill="#F2EFE7">FlowBoard</text>
+  <text x="1000" y="52" class="body" font-size="14" fill="#F2EFE7" opacity="0.7">Log in</text>
+  <rect x="1060" y="34" width="96" height="34" rx="6" fill="#E8B34E"/>
+  <text x="1078" y="56" class="body" font-size="13" font-weight="600" fill="#0F1F1D">Start a board</text>
+
+  <!-- hero left -->
+  <text x="48" y="180" class="display" font-size="40" font-weight="600" fill="#F2EFE7">The board updates before</text>
+  <text x="48" y="228" class="display" font-size="40" font-weight="600" fill="#F2EFE7">you finish looking away.</text>
+  <text x="48" y="270" class="body" font-size="16" fill="#F2EFE7" opacity="0.7">FlowBoard keeps small teams in sync in real time —</text>
+  <text x="48" y="294" class="body" font-size="16" fill="#F2EFE7" opacity="0.7">move a card, and everyone watching sees it move too.</text>
+
+  <rect x="48" y="330" width="230" height="48" rx="6" fill="#E8B34E"/>
+  <text x="72" y="360" class="body" font-size="14" font-weight="600" fill="#0F1F1D">Create your first board</text>
+
+  <!-- stats -->
+  <text x="48" y="450" class="body" font-size="12" fill="#F2EFE7" opacity="0.5">Sync latency</text>
+  <text x="48" y="478" class="display" font-size="22" fill="#F2EFE7">&lt;100ms</text>
+
+  <text x="220" y="450" class="body" font-size="12" fill="#F2EFE7" opacity="0.5">Setup</text>
+  <text x="220" y="478" class="display" font-size="22" fill="#F2EFE7">No install</text>
+
+  <text x="392" y="450" class="body" font-size="12" fill="#F2EFE7" opacity="0.5">Team size</text>
+  <text x="392" y="478" class="display" font-size="22" fill="#F2EFE7">Any</text>
+
+  <!-- board mockup card -->
+  <rect x="640" y="120" width="512" height="340" rx="14" fill="#1C3A37" stroke="#F2EFE7" stroke-opacity="0.1"/>
+
+  <!-- column 1 -->
+  <text x="668" y="160" class="body" font-size="12" fill="#F2EFE7" opacity="0.5">To do</text>
+  <rect x="668" y="176" width="140" height="52" rx="8" fill="#132A28" stroke="#F2EFE7" stroke-opacity="0.1"/>
+  <text x="682" y="207" class="body" font-size="12" fill="#F2EFE7">Ship landing page</text>
+
+  <!-- column 2 -->
+  <text x="828" y="160" class="body" font-size="12" fill="#F2EFE7" opacity="0.5">In progress</text>
+  <rect x="828" y="176" width="150" height="52" rx="8" fill="#132A28" stroke="#F2EFE7" stroke-opacity="0.1"/>
+  <text x="842" y="200" class="body" font-size="12" fill="#F2EFE7">Wire up socket</text>
+  <text x="842" y="216" class="body" font-size="12" fill="#F2EFE7">rooms</text>
+
+  <rect x="828" y="238" width="150" height="52" rx="8" fill="#132A28" stroke="#F2EFE7" stroke-opacity="0.1"/>
+  <text x="842" y="262" class="body" font-size="12" fill="#F2EFE7">Design drag</text>
+  <text x="842" y="278" class="body" font-size="12" fill="#F2EFE7">states</text>
+
+  <!-- column 3 -->
+  <text x="998" y="160" class="body" font-size="12" fill="#F2EFE7" opacity="0.5">Done</text>
+  <rect x="998" y="176" width="130" height="52" rx="8" fill="#132A28" stroke="#F2EFE7" stroke-opacity="0.1"/>
+  <text x="1012" y="200" class="body" font-size="12" fill="#F2EFE7">Write auth</text>
+  <text x="1012" y="216" class="body" font-size="12" fill="#F2EFE7">middleware</text>
+
+  <!-- feature row -->
+  <text x="48" y="560" class="display" font-size="17" font-weight="600" fill="#F2EFE7">Live by default</text>
+  <text x="48" y="584" class="body" font-size="13" fill="#F2EFE7" opacity="0.6">Every board is a socket room —</text>
+  <text x="48" y="602" class="body" font-size="13" fill="#F2EFE7" opacity="0.6">changes reach every open tab.</text>
+
+  <text x="448" y="560" class="display" font-size="17" font-weight="600" fill="#F2EFE7">Built for small teams</text>
+  <text x="448" y="584" class="body" font-size="13" fill="#F2EFE7" opacity="0.6">No seat limits, no setup —</text>
+  <text x="448" y="602" class="body" font-size="13" fill="#F2EFE7" opacity="0.6">create a board and start moving cards.</text>
+
+  <text x="848" y="560" class="display" font-size="17" font-weight="600" fill="#F2EFE7">Your data, your instance</text>
+  <text x="848" y="584" class="body" font-size="13" fill="#F2EFE7" opacity="0.6">Open source and self-hostable</text>
+  <text x="848" y="602" class="body" font-size="13" fill="#F2EFE7" opacity="0.6">on your own MongoDB.</text>
+</svg>
