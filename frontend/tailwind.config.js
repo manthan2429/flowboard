@@ -13,8 +13,8 @@ export default {
         rust: "#B5562C",
       },
       fontFamily: {
-        display: ["'Space Grotesk'", "sans-serif"],
-        body: ["'Inter'", "sans-serif"],
+        display: ["Manrope", "system-ui", "-apple-system", "sans-serif"],
+        body: ["'Inter'", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },

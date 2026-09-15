@@ -21,6 +21,8 @@ watching that board updates instantly via Socket.IO — no refresh needed.
 
 - **Backend:** Node.js, Express, MongoDB (Mongoose), Socket.IO, JWT auth, bcrypt
 - **Frontend:** React (Vite), Tailwind CSS, Framer Motion, React Router, Axios, socket.io-client
+- **Fonts:** Manrope (display) and Inter (body), self-hosted via Fontsource — no external font CDN
+  at runtime
 
 ## Features
 
